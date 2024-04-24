@@ -11,11 +11,15 @@
     <title>Product App</title>
 </head>
 <body>
-<div id="app">
-    <div class="cart">
+    <div class="nav-bar"></div>
+
+    <div id="app">
+      <div class="cart">
         <p>Cart({{ cart.length }})</p>
-    </div>
-    <product :premium="premium" @add-to-cart="updateCart"></product>
-</div>
+      </div>
+      <product :premium="premium" @add-to-cart="updateCart"></product>
+    </div> 
+    
+     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
 </body>
 </html>
