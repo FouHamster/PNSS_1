@@ -26,6 +26,11 @@ Vue.component('product', {
             <ul>
               <li v-for="detail in details">{{ detail }}</li>
             </ul>
+            
+            <ul>
+              <li v-for="size in sizes">{{ size }}</li>
+            </ul>
+            
   
             <div class="color-box"
                  v-for="(variant, index) in variants" 
@@ -75,6 +80,7 @@ Vue.component('product', {
           ],
           reviews: [],
           cart: 0,
+          sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
       }
     },
       methods: {
@@ -98,12 +104,12 @@ Vue.component('product', {
           inStock(){
               return this.variants[this.selectedVariant].variantQuantity
           },
-        //   shipping() {
-        //     if (this.premium) {
-        //       return "Free"
-        //     }
-        //       return 2.99
-        //   }
+          shipping() {
+            if (this.premium) {
+              return "Free"
+            }
+              return 2.99
+          }
       },
       mounted() {
         eventBus.$on('review-submitted', productReview => {
@@ -149,7 +155,7 @@ Vue.component('product', {
         name: null,
         review: null,
         rating: null,
-        errors: []
+        errors: [],
       }
     },
     methods: {
