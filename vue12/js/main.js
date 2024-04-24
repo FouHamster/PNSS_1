@@ -88,12 +88,12 @@ Vue.component('product', {
           inStock(){
               return this.variants[this.selectedVariant].variantQuantity
           },
-          shipping() {
-            if (this.premium) {
-              return "Free"
-            }
-              return 2.99
-          }
+        //   shipping() {
+        //     if (this.premium) {
+        //       return "Free"
+        //     }
+        //       return 2.99
+        //   }
       },
       mounted() {
         eventBus.$on('review-submitted', productReview => {
@@ -170,6 +170,10 @@ Vue.component('product', {
       reviews: {
         type: Array,
         required: false
+      },
+      premium: {
+        type: Boolean,
+        required: true
       }
     },
     template: `
@@ -198,14 +202,32 @@ Vue.component('product', {
         <div v-show="selectedTab === 'Make a Review'">
           <product-review></product-review>
         </div>
-    
+
+        <div v-show="selectedTab === 'Shipping'">
+          <p>{{ shipping }}</p>
+        </div>
+        
+        <div v-show="selectedTab === 'Details'">
+            <ul>
+                <li v-for="detail in details">{{ detail }}</li>
+            </ul>
+        </div>
       </div>
     `,
     data() {
       return {
-        tabs: ['Reviews', 'Make a Review'],
-        selectedTab: 'Reviews'
+        tabs: ['Reviews', 'Make a Review', 'Shipping', 'Details'],
+        selectedTab: 'Reviews',
+        details: ['80% cotton', '20% polyester', 'Gender-neutral']
       }
+    },
+    computed: {
+        shipping() {
+            if (this.premium) {
+              return "Free"
+            }
+              return 2.99
+          }
     }
   })
 
