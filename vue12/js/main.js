@@ -1,6 +1,6 @@
 //Create tabs for “Shipping” and “Details” that display the shipping cost and product details, respectively.
 
-var eventBus = new Vue()
+let eventBus = new Vue()
 
 Vue.component('product', {
     props: {
@@ -18,6 +18,7 @@ Vue.component('product', {
   
         <div class="product-info">
             <h1>{{ product }}</h1>
+            <p>{{ description }}</p>
             <p v-if="inStock">In Stock</p>
             <p v-else>Out of Stock</p>
             <p>Shipping: {{ shipping }}</p>
@@ -40,7 +41,10 @@ Vue.component('product', {
               >
             Add to cart
             </button>
-            <button v-on:click="deleteFromCart" :disabled="!inStock" :class="{ disabledButton: !inStock }"git>Delete from cart</button>
+            <button 
+            v-on:click="deleteFromCart" 
+            :disabled="!inStock" 
+            :class="{ disabledButton: !inStock }">Delete from cart</button>
   
          </div> 
 
@@ -51,6 +55,7 @@ Vue.component('product', {
     data() {
       return {
           product: 'Socks',
+          description: "A pair of warm, fuzzy socks",
           brand: 'Vue Mastery',
           selectedVariant: 0,
           details: ['80% cotton', '20% polyester', 'Gender-neutral'],
@@ -68,7 +73,8 @@ Vue.component('product', {
               variantQuantity: 0     
             }
           ],
-          reviews: []
+          reviews: [],
+          cart: 0,
       }
     },
       methods: {
@@ -245,6 +251,9 @@ Vue.component('product', {
       methods: {
         updateCart(id) {
           this.cart.push(id)
-        }
+        },
+          deleteCart() {
+              this.cart.pop();
+          }
       }
   })
