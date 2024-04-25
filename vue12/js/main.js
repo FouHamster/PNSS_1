@@ -1,7 +1,3 @@
-//Create tabs for “Shipping” and “Details” that display the shipping cost and product details, respectively.
-
-let eventBus = new Vue()
-
 Vue.component('product', {
     props: {
       premium: {
@@ -256,7 +252,7 @@ Vue.component('product', {
       },
       methods: {
         updateCart(id) {
-          this.cart.push(id)
+          this.cart.push(id);
         },
           deleteCart() {
               this.cart.pop();
