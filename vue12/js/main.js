@@ -1,10 +1,5 @@
+var eventBus = new Vue()
 Vue.component('product', {
-    props: {
-      premium: {
-        type: Boolean,
-        required: true
-      }
-    },
     template: `
      <div class="product">
           
@@ -118,34 +113,33 @@ Vue.component('product', {
   Vue.component('product-review', {
     template: `
     <form class="review-form" @submit.prevent="onSubmit">
-        <p v-if="errors.length">
+         <p v-if="errors.length">
         <b>Please correct the following error(s):</b>
         <ul>
             <li v-for="error in errors">{{ error }}</li>
         </ul>
         </p>
-    <p>
-      <label for="name">Name:</label>
-      <input class="name" v-model="name">
-    </p>
-    
-    <p>
-      <label for="review">Review:</label>      
-      <textarea class="review" v-model="review"></textarea>
-    </p>
-    
-    <p>
-      <label for="rating">Rating:</label>
-      <select class="rating" v-model.number="rating">
-        <option>5</option>
-        <option>4</option>
-        <option>3</option>
-        <option>2</option>
-        <option>1</option>
-      </select>
-    </p>
-
-    <p>Would you recommend this product?</p>
+        <p>
+          <label for="name">Name:</label>
+          <input id="name" v-model="name">
+        </p>
+        
+        <p>
+          <label for="review">Review:</label>      
+          <textarea id="review" v-model="review"></textarea>
+        </p>
+        
+        <p>
+          <label for="rating">Rating:</label>
+          <select id="rating" v-model.number="rating">
+            <option>5</option>
+            <option>4</option>
+            <option>3</option>
+            <option>2</option>
+            <option>1</option>
+          </select>
+        </p>
+        <p>Would you recommend this product?</p>
         <label>
           Yes
           <input type="radio" value="Yes" v-model="recommend"/>
@@ -153,13 +147,11 @@ Vue.component('product', {
         <label>
           No
           <input type="radio" value="No" v-model="recommend"/>
-        </label>
-        
-    <p>
-      <input type="submit" value="Submit">  
-    </p>    
-  
-   </form>
+        </label> 
+        <p>
+          <input type="submit" value="Submit">  
+        </p>    
+    </form>
     `,
     data() {
       return {
@@ -173,16 +165,18 @@ Vue.component('product', {
     methods: {
       onSubmit() {
         this.errors = []
-        if (this.name && this.review && this.rating) {
+        if (this.name && this.review && this.rating && this.recommend) {
           let productReview = {
             name: this.name,
             review: this.review,
-            rating: this.rating
+            rating: this.rating,
+            recommend: this.recommend,
           }
-          this.$emit('review-submitted', productReview)
+          eventBus.$emit('review-submitted', productReview)
                 this.name = null
                 this.review = null
                 this.rating = null
+                this. recommend = null
         }
         else {
           if(!this.name) this.errors.push("Name required.")
@@ -269,7 +263,7 @@ Vue.component('product', {
       },
       methods: {
         updateCart(id) {
-          this.cart.push(id);
+          this.cart.push(id); 
         },
           deleteCart() {
               this.cart.pop();
